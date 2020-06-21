@@ -12,8 +12,8 @@ fi
 PR_BRANCH=chore/deps-$(date +%s)
 DESCRIPTION="chore: update deps (automated)"
 
-git config user.name "node-update-deps"
-git config user.email "node-update-deps@neverendingqs.com"
+git config user.name ${1}
+git config user.email ${2}
 git checkout -b ${PR_BRANCH}
 git commit -am "${DESCRIPTION}"
 git push origin ${PR_BRANCH}
