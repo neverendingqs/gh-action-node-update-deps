@@ -1,0 +1,5 @@
+name: Node Update Dependencies
+description: Updates npm dependencies, bumps patch version, and creates a pull request with the changes.
+runs:
+  using: docker
+  image: Dockerfile
