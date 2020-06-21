@@ -4,6 +4,9 @@ branding:
   color: green
 description: Updates Node dependencies and creates a pull request with the changes.
 inputs:
+  bump-version:
+    description: If set, bumps the package version based on value (e.g. patch)
+    default: ''
   git-user-email:
     description: Git user.email to use for the commit.
     default: gh-action-node-update-deps@example.com
@@ -20,3 +23,4 @@ runs:
     - ${{ inputs.git-user-name }}
     - ${{ inputs.git-user-email }}
     - ${{ inputs.package-manager }}
+    - ${{ inputs.bump-version }}
