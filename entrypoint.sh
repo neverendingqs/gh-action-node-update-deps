@@ -10,13 +10,11 @@ npx npm-check-updates -u
 if [ "${PACKAGE_MANAGER}" == 'npm' ]; then
   npm i --package-lock-only
 elif [ "${PACKAGE_MANAGER}" == 'yarn' ]; then
-  yarn upgrade
+  yarn install
 else
   echo "Invalid package manager '${PACKAGE_MANAGER}'. Please set 'package-manager' to either 'npm' or 'yarn'."
   exit 1
 fi
-
-
 
 if $(git diff-index --quiet HEAD); then
   echo 'No dependencies needed to be updated!'
