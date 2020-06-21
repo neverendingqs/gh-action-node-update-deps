@@ -9,7 +9,7 @@ if $(git diff-index --quiet HEAD); then
   exit 0
 fi
 
-DESCRIPTION="chore: update deps (automated) ($(date -I))"
+DESCRIPTION="chore: update deps ($(date -I))"
 PR_BRANCH=chore/deps-$(date +%s)
 
 git config user.name ${1}
