@@ -1,6 +1,6 @@
 # gh-action-node-update-deps
 
-Updates npm dependencies, bumps patch version, and creates a pull request with the changes.
+Updates npm dependencies and creates a pull request with the changes.
 
 Note: prefer dependabot over this action **once** [dependabot supports grouped pull requests](https://github.com/dependabot/feedback/issues/5).
 

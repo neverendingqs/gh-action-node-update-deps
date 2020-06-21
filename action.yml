@@ -2,7 +2,7 @@ name: Node Update Dependencies
 branding:
   icon: package
   color: green
-description: Updates npm dependencies, bumps patch version, and creates a pull request with the changes.
+description: Updates npm dependencies and creates a pull request with the changes.
 inputs:
   git-user-email:
     description: Git user.email to use for the commit.
