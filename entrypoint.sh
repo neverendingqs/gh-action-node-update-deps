@@ -24,9 +24,9 @@ fi
 
 if [ -n "${BUMP_VERSION}" ]; then
   if [ "${PACKAGE_MANAGER}" == 'npm' ]; then
-    npm version ${BUMP_VERSION}
+    npm version --no-git-tag-version ${BUMP_VERSION}
   elif [ "${PACKAGE_MANAGER}" == 'yarn' ]; then
-    yarn version "--${BUMP_VERSION}"
+    yarn version --no-git-tag-version "--${BUMP_VERSION}"
   fi
 fi
 
