@@ -6,6 +6,6 @@ Updates npm dependencies, bumps patch version, and creates a pull request with t
 
 ```yaml
 uses: neverendingqs/gh-action-node-update-deps@v1
-with:
+env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
