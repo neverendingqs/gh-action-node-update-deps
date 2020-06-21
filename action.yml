@@ -7,9 +7,13 @@ inputs:
   git-user-name:
     description: Git user.name to use for the commit.
     default: gh-action-node-update-deps
+  package-manager:
+    description: Set to 'yarn' to use yarn. Defaults to npm.
+    default: npm
 runs:
   using: docker
   image: Dockerfile
   args:
     - ${{ inputs.git-user-name }}
     - ${{ inputs.git-user-email }}
+    - ${{ inputs.package-manager }}

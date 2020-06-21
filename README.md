@@ -19,4 +19,6 @@ jobs:
       - uses: neverendingqs/gh-action-node-update-deps@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          package-manager: yarn   # defaults to 'npm'
 ```
