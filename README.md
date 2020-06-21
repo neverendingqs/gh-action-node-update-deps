@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: neverendingqs/gh-action-node-update-deps@v1
+      - uses: neverendingqs/gh-action-node-update-deps@v1.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
