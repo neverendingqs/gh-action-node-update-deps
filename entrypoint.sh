@@ -9,6 +9,7 @@ BUMP_VERSION=${4}
 npx npm-check-updates -u
 
 if [ "${PACKAGE_MANAGER}" == 'npm' ]; then
+  npm audit fix --force
   npm i --package-lock-only
 elif [ "${PACKAGE_MANAGER}" == 'yarn' ]; then
   yarn install
