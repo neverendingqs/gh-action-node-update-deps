@@ -9,10 +9,10 @@ inputs:
     default: ''
   git-user-email:
     description: Git user.email to use for the commit.
-    default: gh-action-node-update-deps@example.com
+    default: 41898282+github-actions[bot]@users.noreply.github.com
   git-user-name:
     description: Git user.name to use for the commit.
-    default: gh-action-node-update-deps
+    default: github-actions[bot]
   package-manager:
     description: Set to 'yarn' to use yarn. Defaults to npm.
     default: npm
