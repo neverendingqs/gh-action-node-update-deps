@@ -6,6 +6,8 @@ GIT_USER_EMAIL=${2}
 PACKAGE_MANAGER=${3}
 BUMP_VERSION=${4}
 
+npx npm-check-updates -u
+
 if [ "${PACKAGE_MANAGER}" == 'npm' ]; then
   npm i --package-lock-only
   npm audit fix --force
