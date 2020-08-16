@@ -40,4 +40,4 @@ git checkout -b ${PR_BRANCH}
 git commit -am "${DESCRIPTION}"
 git push origin ${PR_BRANCH}
 
-hub pull-request "${PR_PARAMS} -m ${DESCRIPTION}"
+hub pull-request "-m ${DESCRIPTION}"
