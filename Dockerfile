@@ -1,9 +1,6 @@
-FROM node:lts-slim
-WORKDIR /action
+FROM neverendingqs/gh-action-node-update-deps-image:latest
 
-RUN apt-get update && \
-  apt-get upgrade -y && \
-  apt-get install -y curl git
+WORKDIR /action
 
 COPY entrypoint.sh /entrypoint.sh
 

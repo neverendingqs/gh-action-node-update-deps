@@ -6,8 +6,6 @@ GIT_USER_EMAIL=${2}
 PACKAGE_MANAGER=${3}
 BUMP_VERSION=${4}
 
-npx npm-check-updates -u
-
 if [ "${PACKAGE_MANAGER}" == 'npm' ]; then
   npm i --package-lock-only
   npm audit fix --force
@@ -40,5 +38,4 @@ git checkout -b ${PR_BRANCH}
 git commit -am "${DESCRIPTION}"
 git push origin ${PR_BRANCH}
 
-curl -fsSL https://github.com/github/hub/raw/master/script/get | bash -s 2.14.1
 bin/hub pull-request -m "${DESCRIPTION}"
