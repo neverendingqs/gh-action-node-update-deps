@@ -1,4 +1,4 @@
-FROM neverendingqs/gh-action-node-update-deps-image:latest
+FROM neverendingqs/node-lts-git-hub-image:latest
 
 WORKDIR /action
 
