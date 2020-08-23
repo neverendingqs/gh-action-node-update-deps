@@ -40,7 +40,7 @@ git config user.email ${GIT_USER_EMAIL}
 git checkout -b ${PR_BRANCH}
 
 if [ -n "${PRE_COMMIT_SCRIPT}" ]; then
-  "${PRE_COMMIT_SCRIPT}"
+  ${PRE_COMMIT_SCRIPT}
 fi
 
 git commit -am "${DESCRIPTION}"
