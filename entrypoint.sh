@@ -5,6 +5,7 @@ GIT_USER_NAME=${1}
 GIT_USER_EMAIL=${2}
 PACKAGE_MANAGER=${3}
 BUMP_VERSION=${4}
+PRE_COMMIT_SCRIPT=${5}
 
 npx npm-check-updates -u
 
@@ -37,6 +38,11 @@ PR_BRANCH=chore/deps-$(date +%s)
 git config user.name ${GIT_USER_NAME}
 git config user.email ${GIT_USER_EMAIL}
 git checkout -b ${PR_BRANCH}
+
+if [ -n "${PRE_COMMIT_SCRIPT}" ]; then
+  ${PRE_COMMIT_SCRIPT}
+fi
+
 git commit -am "${DESCRIPTION}"
 git push origin ${PR_BRANCH}
 
