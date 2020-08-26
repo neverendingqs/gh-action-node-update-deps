@@ -5,7 +5,7 @@ branding:
 description: Updates Node dependencies and creates a pull request with the changes.
 inputs:
   bump-version:
-    description: If set, bumps the package version based on value (e.g. patch)
+    description: If set, bumps the package version based on value (e.g. patch).
     default: ''
   git-user-email:
     description: Git user.email to use for the commit.
@@ -13,11 +13,14 @@ inputs:
   git-user-name:
     description: Git user.name to use for the commit.
     default: github-actions[bot]
-  pre-commit-script:
-    description: A command to run before committing the dependency changes (e.g. npm run build)
   package-manager:
     description: Set to 'yarn' to use yarn. Defaults to npm.
     default: npm
+  pre-commit-script:
+    description: A command to run before committing the dependency changes (e.g. npm run build).
+  pull-request-labels:
+    description: Comma-delimited labels to apply to the pull request.
+    default: dependencies
 runs:
   using: docker
   image: Dockerfile
@@ -27,3 +30,4 @@ runs:
     - ${{ inputs.package-manager }}
     - ${{ inputs.bump-version }}
     - ${{ inputs.pre-commit-script }}
+    - ${{ inputs.pull-request-labels }}
