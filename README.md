@@ -24,7 +24,7 @@ jobs:
         with:
           bump-version: patch # defaults to not bumping the package version
           package-manager: yarn # defaults to 'npm'
-          git-user-email: my@email.com # defaults to '41898282+github-actions[bot]@users.noreply.github.com'
+          git-user-email: myemail@example.com # defaults to '41898282+github-actions[bot]@users.noreply.github.com'
           git-user-name: Test # defaults to 'github-actions[bot]'
           pre-commit-script: npm run build # defaults to not running anything
           pull-request-labels: test # defaults to 'dependencies'
