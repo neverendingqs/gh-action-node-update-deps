@@ -28,4 +28,5 @@ jobs:
           git-user-name: Test                 # defaults to 'github-actions[bot]'
           pre-commit-script: npm run build    # defaults to not running anything
           pull-request-labels: test           # defaults to 'dependencies'
+          target-version: minor               # defaults to 'latest'
 ```

@@ -7,8 +7,9 @@ PACKAGE_MANAGER=${3}
 BUMP_VERSION=${4}
 PRE_COMMIT_SCRIPT=${5}
 PULL_REQUEST_LABELS=${6}
+TARGET_VERSION=${7}
 
-npx npm-check-updates -u
+npx npm-check-updates -u -t ${TARGET_VERSION}
 
 if [ "${PACKAGE_MANAGER}" == 'npm' ]; then
   npm i --package-lock-only

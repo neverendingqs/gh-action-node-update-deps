@@ -21,6 +21,9 @@ inputs:
   pull-request-labels:
     description: Comma-delimited labels to apply to the pull request.
     default: dependencies
+  target-version:
+    description: Target version to upgrade to; latest, newest, greatest, minor, patch.
+    default: latest
 runs:
   using: docker
   image: Dockerfile
@@ -31,3 +34,4 @@ runs:
     - ${{ inputs.bump-version }}
     - ${{ inputs.pre-commit-script }}
     - ${{ inputs.pull-request-labels }}
+    - ${{ inputs.target-version }}
