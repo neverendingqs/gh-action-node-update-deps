@@ -48,6 +48,12 @@ fi
 git commit -am "${DESCRIPTION}"
 git push origin ${PR_BRANCH}
 
+curl \
+--url https://api.github.com/repos/${{ github.repository }} \
+--header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+--header 'content-type: application/json' \
+--fail
+
 RUN_LABEL="${GITHUB_WORKFLOW}@${GITHUB_RUN_NUMBER}"
 RUN_ENDPOINT="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
 
