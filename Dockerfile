@@ -1,4 +1,4 @@
-FROM neverendingqs/node-lts-git-hub-image:latest
+FROM neverendingqs/node-lts-git-gh-image:latest
 
 WORKDIR /action
 
