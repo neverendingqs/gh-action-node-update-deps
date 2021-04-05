@@ -60,4 +60,4 @@ PR_URL=$(gh pr create \
 
 echo "Created pull request '${PR_URL}'."
 
-gh issue edit ${PR_URL} --add-label ${PULL_REQUEST_LABELS}
+gh pr edit ${PR_URL} --add-label ${PULL_REQUEST_LABELS}
