@@ -54,7 +54,7 @@ DEFAULT_BRANCH=$(curl --silent \
   --url https://api.github.com/repos/${GITHUB_REPOSITORY} \
   --header "authorization: Bearer ${GITHUB_TOKEN}" \
   --header 'content-type: application/json' \
-  --fail | jq .default_branch)
+  --fail | jq -r .default_branch)
 
 PR_NUMBER=$(hub pull-request -b ${DEFAULT_BRANCH} --no-edit | grep -o '[^/]*$')
 
