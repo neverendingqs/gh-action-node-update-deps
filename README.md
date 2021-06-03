@@ -23,7 +23,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           bump-version: patch                 # defaults to not bumping the package version
-          commit-message-prefix: fix          # defaults 'chore''
+          commit-message-prefix: fix          # defaults 'chore'
           package-manager: yarn               # defaults to 'npm'
           git-user-email: myemail@example.com # defaults to '41898282+github-actions[bot]@users.noreply.github.com'
           git-user-name: Test                 # defaults to 'github-actions[bot]'
