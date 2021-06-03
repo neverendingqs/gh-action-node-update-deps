@@ -7,6 +7,9 @@ inputs:
   bump-version:
     description: If set, bumps the package version based on value (e.g. patch).
     default: ''
+  commit-message-prefix:
+    description: Prefix to use for commit messages.
+    default: chore
   git-user-email:
     description: Git user.email to use for the commit.
     default: 41898282+github-actions[bot]@users.noreply.github.com
@@ -35,3 +38,4 @@ runs:
     - ${{ inputs.pre-commit-script }}
     - ${{ inputs.pull-request-labels }}
     - ${{ inputs.target-version }}
+    - ${{ inputs.commit-message-prefix }}
