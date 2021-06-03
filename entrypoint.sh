@@ -8,6 +8,7 @@ BUMP_VERSION=${4}
 PRE_COMMIT_SCRIPT=${5}
 PULL_REQUEST_LABELS=${6}
 TARGET_VERSION=${7}
+COMMIT_MSG_PREFIX=${8}
 
 npx npm-check-updates -u -t ${TARGET_VERSION}
 
@@ -37,7 +38,7 @@ fi
 RUN_LABEL="${GITHUB_WORKFLOW}@${GITHUB_RUN_NUMBER}"
 RUN_ENDPOINT="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
 
-COMMIT_MSG="chore: update deps ($(date -I))"
+COMMIT_MSG="${COMMIT_MSG_PREFIX}: update deps ($(date -I))"
 PR_BRANCH=chore/deps-$(date +%s)
 
 git config user.name ${GIT_USER_NAME}
