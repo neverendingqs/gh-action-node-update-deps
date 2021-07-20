@@ -9,6 +9,16 @@ PRE_COMMIT_SCRIPT=${5}
 PULL_REQUEST_LABELS=${6}
 TARGET_VERSION=${7}
 COMMIT_MSG_PREFIX=${8}
+NPM_SCOPE=${9}
+NPM_REGISTRY=${10}
+
+if [ -n "${NPM_SCOPE}" ] && [ -n "${NPM_REGISTRY}" ]; then
+  NPM_REGISTRY_PATH=${NPM_REGISTRY#https:}
+
+  echo "${NPM_SCOPE}:registry=${NPM_REGISTRY}" > .npmrc
+  echo "${NPM_REGISTRY_PATH}:_authToken=${NPM_TOKEN}" >> .npmrc
+  echo "${NPM_REGISTRY_PATH}:always-auth=true" >> .npmrc
+fi
 
 npx npm-check-updates -u -t ${TARGET_VERSION}
 
