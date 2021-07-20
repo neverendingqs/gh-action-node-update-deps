@@ -12,7 +12,7 @@ COMMIT_MSG_PREFIX=${8}
 NPM_SCOPE=${9}
 NPM_REGISTRY=${10}
 
-if [ -n "${NPM_SCOPE}" && -n "${NPM_REGISTRY}" ]; then
+if [ -n "${NPM_SCOPE}" ] && [ -n "${NPM_REGISTRY}" ]; then
   NPM_REGISTRY_PATH=${NPM_REGISTRY#https:}
 
   echo "${NPM_SCOPE}:registry=${NPM_REGISTRY}" > .npmrc
