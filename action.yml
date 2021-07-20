@@ -16,6 +16,12 @@ inputs:
   git-user-name:
     description: Git user.name to use for the commit.
     default: github-actions[bot]
+  npm-registry-scope:
+    description: NPM registry scope
+    default: Packages of this scope will use the registry defined in 'npm-registry-url'.
+  npm-registry-url:
+    description: NPM registry to used for scope defined in `npm-registry-scope`. Must start with https://.
+    default: ''
   package-manager:
     description: Set to 'yarn' to use yarn. Defaults to npm.
     default: npm
@@ -39,3 +45,5 @@ runs:
     - ${{ inputs.pull-request-labels }}
     - ${{ inputs.target-version }}
     - ${{ inputs.commit-message-prefix }}
+    - ${{ inputs.npm-registry-scope }}
+    - ${{ inputs.npm-registry-url }}
