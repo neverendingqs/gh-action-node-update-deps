@@ -21,7 +21,7 @@ jobs:
       - uses: neverendingqs/gh-action-node-update-deps@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}       # NPM token to use when `registry-*` configs are set
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}       # NPM token to use when `npm-registry-*` configs are set
         with:
           bump-version: patch                       # defaults to not bumping the package version
           commit-message-prefix: fix                # defaults 'chore'
