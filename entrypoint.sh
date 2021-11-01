@@ -24,7 +24,7 @@ npx npm-check-updates -u -t ${TARGET_VERSION}
 
 if [ "${PACKAGE_MANAGER}" == 'npm' ]; then
   npm i --package-lock-only
-  npm audit fix --force
+  npm audit fix --force --audit-level=none  # Best effort only
 elif [ "${PACKAGE_MANAGER}" == 'yarn' ]; then
   yarn install
 else
