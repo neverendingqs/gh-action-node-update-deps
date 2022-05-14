@@ -1,0 +1,21 @@
+name: Version Sync
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: master
+
+      - name: Sync with target branch
+        run: git push origin master:v1
