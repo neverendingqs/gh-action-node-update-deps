@@ -1,5 +1,7 @@
 # gh-action-node-update-deps
 
+**Note: `master` is an alias to `v1` to avoid breaking existing users. The default branch is `main`.**
+
 Updates Node dependencies and creates a pull request with the changes.
 
 Note: prefer dependabot over this action **once** [dependabot supports grouped pull requests](https://github.com/dependabot/feedback/issues/5).
@@ -18,7 +20,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: neverendingqs/gh-action-node-update-deps@master
+      - uses: neverendingqs/gh-action-node-update-deps@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}       # NPM token to use when `npm-registry-*` configs are set
