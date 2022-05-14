@@ -3,7 +3,7 @@ name: Version Sync
 on:
   push:
     branches:
-      - master
+      - main
   workflow_dispatch:
 
 jobs:
@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-          ref: master
+          ref: main
 
       - name: Sync with target branch
-        run: git push origin master:v1
+        run: git push -f origin main:v2

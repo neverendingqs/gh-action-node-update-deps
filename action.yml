@@ -1,49 +1,166 @@
 name: Update Node Dependencies
+
 branding:
   icon: package
   color: green
+
 description: Updates Node dependencies and creates a pull request with the changes.
+
 inputs:
   bump-version:
     description: If set, bumps the package version based on value (e.g. patch).
-    default: ''
+    required: false
   commit-message-prefix:
     description: Prefix to use for commit messages.
     default: chore
+    required: false
+  github-token:
+    description: GITHUB_TOKEN to use. Uses repository GITHUB_TOKEN by default.
+    required: false
   git-user-email:
     description: Git user.email to use for the commit.
     default: 41898282+github-actions[bot]@users.noreply.github.com
+    required: false
   git-user-name:
     description: Git user.name to use for the commit.
     default: github-actions[bot]
-  npm-registry-scope:
-    description: NPM registry scope
-    default: Packages of this scope will use the registry defined in 'npm-registry-url'.
-  npm-registry-url:
-    description: NPM registry to used for scope defined in `npm-registry-scope`. Must start with https://.
-    default: ''
+    required: false
   package-manager:
     description: Set to 'yarn' to use yarn. Defaults to npm.
     default: npm
+    required: false
   pre-commit-script:
     description: A command to run before committing the dependency changes (e.g. npm run build).
+    required: false
   pull-request-labels:
     description: Comma-delimited labels to apply to the pull request.
     default: dependencies
   target-version:
     description: Target version to upgrade to; latest, newest, greatest, minor, patch.
     default: latest
+    required: false
+
 runs:
-  using: docker
-  image: Dockerfile
-  args:
-    - ${{ inputs.git-user-name }}
-    - ${{ inputs.git-user-email }}
-    - ${{ inputs.package-manager }}
-    - ${{ inputs.bump-version }}
-    - ${{ inputs.pre-commit-script }}
-    - ${{ inputs.pull-request-labels }}
-    - ${{ inputs.target-version }}
-    - ${{ inputs.commit-message-prefix }}
-    - ${{ inputs.npm-registry-scope }}
-    - ${{ inputs.npm-registry-url }}
+  using: composite
+  steps:
+    - name: Check if package manager is supported
+      shell: bash
+      run: |
+        set -eux
+
+        if ! { [ "${PACKAGE_MANAGER}" != 'npm' ] || [ "${PACKAGE_MANAGER}" != 'yarn' ]; }; then
+          echo "Invalid package manager '${PACKAGE_MANAGER}'. Please set 'package-manager' to either 'npm' or 'yarn'."
+          exit 1
+        fi
+      env:
+        PACKAGE_MANAGER: ${{ inputs.package-manager }}
+
+    - name: Update package.json
+      shell: bash
+      run: npx npm-check-updates -u -t ${TARGET_VERSION}
+      env:
+        TARGET_VERSION: ${{ inputs.target-version }}
+
+    - name: Update lock file
+      shell: bash
+      run: |
+        set -eux
+
+        if [ "${PACKAGE_MANAGER}" == 'npm' ]; then
+          npm i --package-lock-only
+        elif [ "${PACKAGE_MANAGER}" == 'yarn' ]; then
+          yarn install
+        fi
+      env:
+        PACKAGE_MANAGER: ${{ inputs.package-manager }}
+
+    - name: Check if any updates are required
+      id: check-if-updates
+      shell: bash
+      run: |
+        set -eux
+
+        if $(git diff-index --quiet HEAD); then
+          echo 'No dependencies needed to be updated!'
+          echo "::set-output name=has-updates::1"
+        fi
+
+    - name: Bump version
+      if: ${{ inputs.bump-version }}
+      shell: bash
+      run: |
+        set -eux
+
+        if [ "${PACKAGE_MANAGER}" == 'npm' ]; then
+          npm version --no-git-tag-version ${BUMP_VERSION}
+        elif [ "${PACKAGE_MANAGER}" == 'yarn' ]; then
+          yarn version --no-git-tag-version "--${BUMP_VERSION}"
+        fi
+      env:
+        BUMP_VERSION: ${{ inputs.bump-version }}
+        PACKAGE_MANAGER: ${{ inputs.package-manager }}
+
+    - name: Pre-commit script
+      if: ${{ inputs.pre-commit-script }}
+      shell: bash
+      run: ${{ inputs.pre-commit-script }}
+
+    - name: Push branch
+      id: push-branch
+      shell: bash
+      run: |
+        set -eux
+
+        COMMIT_MSG="${COMMIT_MSG_PREFIX}: update deps ($(date -I))"
+        PR_BRANCH=chore/deps-$(date +%s)
+
+        git config user.name ${GIT_USER_NAME}
+        git config user.email ${GIT_USER_EMAIL}
+
+        git checkout -b ${PR_BRANCH}
+        git commit -am "${COMMIT_MSG}"
+        git push origin ${PR_BRANCH}
+
+        echo "::set-output name=pr-branch::${PR_BRANCH}"
+        echo "::set-output name=pr-title::${COMMIT_MSG}"
+      env:
+        COMMIT_MSG_PREFIX: ${{ inputs.commit-message-prefix }}
+        GITHUB_TOKEN: ${{ inputs.github-token || github.token }}
+        GIT_USER_EMAIL: ${{ inputs.git-user-email }}
+        GIT_USER_NAME: ${{ inputs.git-user-name }}
+
+    - name: Create pull request
+      uses: actions/github-script@v6
+      env:
+        PR_BRANCH: ${{ steps.push-branch.outputs.pr-branch }}
+        PR_LABELS: ${{ inputs.pull-request-labels }}
+        PR_TITLE: ${{ steps.push-branch.outputs.pr-title }}
+      with:
+        github-token: ${{ inputs.github-token || github.token }}
+        script: |
+          const runLabel = `${process.env.GITHUB_WORKFLOW}@${process.env.GITHUB_RUN_NUMBER}`
+          const runEndpoint = `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`
+
+          const repo = await github.rest.repos.get({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+          });
+
+          const pr = await github.rest.pulls.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+
+            base: repo.data.default_branch,
+            head: process.env.PR_BRANCH,
+
+            body: `_Generated by [${runLabel}](${runEndpoint})._`,
+            maintainer_can_modify: true,
+            title: process.env.PR_TITLE,
+          });
+
+          github.rest.issues.addLabels({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: pr.data.number,
+            labels: process.env.PR_LABELS.split(','),
+          });
