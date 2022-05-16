@@ -61,9 +61,9 @@ runs:
 
     - name: Update package.json
       shell: bash
-      run: npx npm-check-updates@${NPX_VERSION} -u -t ${TARGET_VERSION}
+      run: npx npm-check-updates@${NCU_VERSION} -u -t ${TARGET_VERSION}
       env:
-        NPX_VERSION: ${{ inputs.npx-version }}
+        NCU_VERSION: ${{ inputs.npx-version }}
         TARGET_VERSION: ${{ inputs.target-version }}
 
     - name: Update lock file
