@@ -63,7 +63,7 @@ runs:
       shell: bash
       run: npx npm-check-updates@${NCU_VERSION} -u -t ${TARGET_VERSION}
       env:
-        NCU_VERSION: ${{ inputs.npx-version }}
+        NCU_VERSION: ${{ inputs.npm-check-updates-version }}
         TARGET_VERSION: ${{ inputs.target-version }}
 
     - name: Update lock file
