@@ -25,8 +25,8 @@ inputs:
     description: Git user.name to use for the commit.
     default: github-actions[bot]
     required: false
-  npx-version:
-    description: Version of npx to use
+  npm-check-updates-version:
+    description: Version of npm-check-updates to use
     default: latest
     required: false
   package-manager:
