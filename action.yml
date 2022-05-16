@@ -25,6 +25,10 @@ inputs:
     description: Git user.name to use for the commit.
     default: github-actions[bot]
     required: false
+  npx-version:
+    description: Version of npx to use
+    default: latest
+    required: false
   package-manager:
     description: Set to 'yarn' to use yarn. Defaults to npm.
     default: npm
@@ -57,8 +61,9 @@ runs:
 
     - name: Update package.json
       shell: bash
-      run: npx npm-check-updates -u -t ${TARGET_VERSION}
+      run: npx npm-check-updates@${NPX_VERSION} -u -t ${TARGET_VERSION}
       env:
+        NPX_VERSION: ${{ inputs.npx-version }}
         TARGET_VERSION: ${{ inputs.target-version }}
 
     - name: Update lock file
