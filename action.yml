@@ -72,9 +72,9 @@ runs:
         set -eux
 
         if [ "${PACKAGE_MANAGER}" == 'npm' ]; then
-          npm i --package-lock-only
+          npm i --package-lock-only --ignore-scripts
         elif [ "${PACKAGE_MANAGER}" == 'yarn' ]; then
-          yarn install
+          yarn install --ignore-scripts
         fi
       env:
         PACKAGE_MANAGER: ${{ inputs.package-manager }}
